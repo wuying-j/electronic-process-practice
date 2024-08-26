@@ -1,0 +1,224 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.24.2.0
+Copyright (C) 2017 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: a Adahjsk, a, LIC=FYKYW-QLKCH-TGN7T-R3NXP-4KUDU-QGB4Z
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.24.1
+Toolchain Path:  E:\Keil5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 5 (build 528)
+Assembler:       Armasm.exe V5.06 update 5 (build 528)
+Linker/Locator:  ArmLink.exe V5.06 update 5 (build 528)
+Library Manager: ArmAr.exe V5.06 update 5 (build 528)
+Hex Converter:   FromElf.exe V5.06 update 5 (build 528)
+CPU DLL:         SARMCM3.DLL V5.24.1
+Dialog DLL:      DCM.DLL V1.16.0.0
+Target DLL:      Segger\JL2CM3.dll V2.99.26.0
+Dialog DLL:      TCM.DLL V1.32.0.0
+ 
+<h2>Project:</h2>
+e:\文件（分类）\electronic-process-practice\car_ctrl\MDK-ARM\car_2023.uvprojx
+Project File Date:  08/23/2024
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 5 (build 528)', folder: 'E:\Keil5\ARM\ARMCC\Bin'
+Rebuild target 'car_2023'
+assembling startup_stm32f103xe.s...
+compiling esp32.c...
+..\Core\Src\esp32.c(75): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *restrict"
+  	strcat( bt_name , g_CarConfig.bt_name+8 );
+..\Core\Src\esp32.c(78): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *restrict"
+  	strcat( bt_pin , g_CarConfig.bt_pwd );
+..\Core\Src\esp32.c(81): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "const uint8_t *"
+  	HAL_UART_Transmit(&huart1, bt_name, strlen(bt_name), 100);
+..\Core\Src\esp32.c(83): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "const uint8_t *"
+  	HAL_UART_Transmit(&huart1, bt_pin, strlen(bt_pin), 100);
+..\Core\Src\esp32.c: 4 warnings, 0 errors
+compiling oled_i2c.c...
+..\Core\Src\oled_i2c.c(294): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	  OLED_ShowAscii( 0,0,data[i] ,strlen(data[i]) ,1  );
+..\Core\Src\oled_i2c.c(305): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	len = strlen(data);
+..\Core\Src\oled_i2c.c(309): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *restrict"
+  		strncpy(buf, data, len);
+..\Core\Src\oled_i2c.c(309): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *restrict"
+  		strncpy(buf, data, len);
+..\Core\Src\oled_i2c.c: 4 warnings, 0 errors
+compiling btn.c...
+../Core/Inc/btn.h(6): warning:  #1295-D: Deprecated declaration BTN_Read_Left - give arg types
+  uint8_t BTN_Read_Left();
+../Core/Inc/btn.h(7): warning:  #1295-D: Deprecated declaration BTN_Read_Right - give arg types
+  uint8_t BTN_Read_Right();
+..\Core\Src\btn.c: 2 warnings, 0 errors
+compiling angle_kalman_filter.c...
+compiling ultrasonicwave.c...
+..\Core\Src\ultrasonicwave.c(89): warning:  #223-D: function "sprintf" declared implicitly
+  	sprintf( buf , "%04dmm" , (int16_t)g_Distance );
+..\Core\Src\ultrasonicwave.c: 1 warning, 0 errors
+compiling uart_dma.c...
+..\Core\Src\uart_dma.c(26): warning:  #188-D: enumerated type mixed with another type
+  	{0,0,0,0,0,0,0,0} ,
+..\Core\Src\uart_dma.c(27): warning:  #188-D: enumerated type mixed with another type
+  	{0,0,0,0,0,0,0,0} ,
+..\Core\Src\uart_dma.c(28): warning:  #188-D: enumerated type mixed with another type
+  	{0,0,0,0,0,0,0,0} ,
+..\Core\Src\uart_dma.c(29): warning:  #188-D: enumerated type mixed with another type
+  	{0,0,0,0,0,0,0,0} ,
+..\Core\Src\uart_dma.c(30): warning:  #188-D: enumerated type mixed with another type
+  	{0,0,0,0,0,0,0,0} ,
+..\Core\Src\uart_dma.c: 5 warnings, 0 errors
+compiling ir_track.c...
+..\Core\Src\ir_track.c(79): warning:  #223-D: function "abs" declared implicitly
+  		if(abs(g_TrackStatus.ir_adc[i] - g_CarConfig.adc_compare_gate) < 300 )
+..\Core\Src\ir_track.c: 1 warning, 0 errors
+compiling motor_drive.c...
+compiling music.c...
+..\Core\Src\music.c(88): warning:  #1-D: last line of file ends without a newline
+  }
+..\Core\Src\music.c(56): warning:  #177-D: variable "i"  was declared but never referenced
+  	uint8_t i ;
+..\Core\Src\music.c(57): warning:  #177-D: variable "counter"  was declared but never referenced
+  	uint32_t counter ;
+..\Core\Src\music.c: 3 warnings, 0 errors
+compiling usb_uart.c...
+..\Core\Src\usb_uart.c(102): warning:  #223-D: function "USB_RxDataCallback" declared implicitly
+  		if ( USB_RxDataCallback( g_usb_buf.usb_rx_buf[ g_usb_buf.rx_buf_head ] , g_usb_buf.rx_buf_size[ g_usb_buf.rx_buf_head ] ) == 0 ) return ;
+..\Core\Src\usb_uart.c: 1 warning, 0 errors
+compiling common.c...
+../Core/Inc/btn.h(6): warning:  #1295-D: Deprecated declaration BTN_Read_Left - give arg types
+  uint8_t BTN_Read_Left();
+../Core/Inc/btn.h(7): warning:  #1295-D: Deprecated declaration BTN_Read_Right - give arg types
+  uint8_t BTN_Read_Right();
+..\Core\Src\common.c(118): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  		if ( ( len >= 5 ) && (strncmp( buf , "RESET" , 5 ) == 0) )
+..\Core\Src\common.c(123): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  		if ( ( len >= 5 ) && (strncmp( buf , "FLASH" , 5 ) == 0) )
+..\Core\Src\common.c(128): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  		if ( ( len >= 4 ) && (strncmp( buf , "INIT" , 4 ) == 0) )
+..\Core\Src\common.c(134): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  		if ( ( len >= 5 ) && (strncmp( buf , "MUSIC" , 5 ) == 0) )
+..\Core\Src\common.c(141): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  		if ( ( len == 4 ) && (strncmp( buf , "WIFI" , 4 ) == 0) )
+..\Core\Src\common.c: 7 warnings, 0 errors
+compiling car_drive.c...
+..\Core\Src\car_drive.c(160): warning:  #68-D: integer conversion resulted in a change of sign
+  				g_CarCtrl.car_speed = -600 ;  // brake car 
+..\Core\Src\car_drive.c(163): warning:  #68-D: integer conversion resulted in a change of sign
+  				g_CarCtrl.car_speed = -400 ;  // brake car 
+..\Core\Src\car_drive.c(260): warning:  #167-D: argument of type "const uint8_t *" is incompatible with parameter of type "const char *"
+  		if(strncmp((const uint8_t *)g_CarCtrlCmd[i].cmd, (const char *)buf, strlen((const char *)g_CarCtrlCmd[i].cmd)) == 0)
+..\Core\Src\car_drive.c(328): warning:  #111-D: statement is unreachable
+  					break;
+..\Core\Src\car_drive.c(388): warning:  #111-D: statement is unreachable
+  			break;
+..\Core\Src\car_drive.c(428): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	if ( strcmp( cmd_ptr->cmd , 
+SER_CMD_MC_F ) == 0)
+..\Core\Src\car_drive.c(436): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	else if ( strcmp( cmd_ptr->cmd , 
+SER_CMD_MC_B ) == 0)
+..\Core\Src\car_drive.c(444): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	else if ( strcmp( cmd_ptr->cmd , 
+SER_CMD_MC_L ) == 0)
+..\Core\Src\car_drive.c(471): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	else if ( strcmp( cmd_ptr->cmd , 
+SER_CMD_MC_R ) == 0)
+..\Core\Src\car_drive.c(503): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	if ( strcmp( cmd_ptr->cmd , 
+SER_CMD_START ) == 0)
+..\Core\Src\car_drive.c(511): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	else if ( strcmp( cmd_ptr->cmd , 
+SER_CMD_BT_ON ) == 0)
+..\Core\Src\car_drive.c(515): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	else if ( strcmp( cmd_ptr->cmd , 
+SER_CMD_BT_OFF ) == 0)
+..\Core\Src\car_drive.c(519): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	else if ( strcmp( cmd_ptr->cmd , 
+SER_CMD_MC_S ) == 0)
+..\Core\Src\car_drive.c(524): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	else if ( strcmp( cmd_ptr->cmd , 
+SER_CMD_SHOW_CFG ) == 0)
+..\Core\Src\car_drive.c(533): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	else if ( strcmp( cmd_ptr->cmd , 
+SER_CMD_FLASH_INIT ) == 0)
+..\Core\Src\car_drive.c(539): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	else if ( strcmp( cmd_ptr->cmd , 
+SER_CMD_MUSIC_ON ) == 0)
+..\Core\Src\car_drive.c(543): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+  	else if ( strcmp( cmd_ptr->cmd , 
+SER_CMD_MUSIC_OFF ) == 0)
+..\Core\Src\car_drive.c: 17 warnings, 0 errors
+compiling i2c.c...
+compiling stm32f1xx_hal_msp.c...
+compiling dma.c...
+compiling stm32f1xx_hal_gpio_ex.c...
+compiling usart.c...
+compiling gpio.c...
+compiling adc.c...
+compiling tim.c...
+compiling stm32f1xx_it.c...
+compiling led_matrix.c...
+compiling main.c...
+compiling user_flash.c...
+compiling stm32f1xx_hal_cortex.c...
+compiling stm32f1xx_hal_pcd_ex.c...
+compiling stm32f1xx_hal_pwr.c...
+compiling stm32f1xx_hal.c...
+compiling stm32f1xx_hal_rcc_ex.c...
+compiling stm32f1xx_hal_gpio.c...
+compiling stm32f1xx_hal_flash.c...
+compiling stm32f1xx_hal_flash_ex.c...
+compiling stm32f1xx_hal_rcc.c...
+compiling stm32f1xx_hal_dma.c...
+compiling stm32f1xx_hal_pcd.c...
+compiling stm32f1xx_ll_usb.c...
+compiling usb_device.c...
+compiling usbd_desc.c...
+compiling system_stm32f1xx.c...
+compiling stm32f1xx_hal_adc_ex.c...
+compiling usbd_cdc_if.c...
+compiling stm32f1xx_hal_exti.c...
+compiling usbd_conf.c...
+compiling stm32f1xx_hal_adc.c...
+compiling stm32f1xx_hal_tim_ex.c...
+compiling stm32f1xx_hal_uart.c...
+compiling stm32f1xx_hal_i2c.c...
+compiling stm32f1xx_hal_tim.c...
+compiling usbd_ioreq.c...
+compiling usbd_ctlreq.c...
+compiling usbd_cdc.c...
+compiling usbd_core.c...
+linking...
+Program Size: Code=40360 RO-data=1188 RW-data=1832 ZI-data=13176  
+FromELF: creating hex file...
+"car_2023\car_2023.axf" - 0 Error(s), 45 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.0.1.pack
+                ARM.CMSIS.5.0.1
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.0.1
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F1xx_DFP.2.2.0.pack
+                Keil.STM32F1xx_DFP.2.2.0
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_car_2023
+  E:\Keil5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include
+  E:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.0.1
+Build Time Elapsed:  00:00:14
+</pre>
+</body>
+</html>
