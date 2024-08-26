@@ -67,11 +67,11 @@ car_ctrl_cmd_t g_CarCtrlCmd[] = {
 	{	USER_CMD_MUSIC_ON	  ,	&UserCtrlCmdCallback, 		  0 , 0 },		
 	{	USER_CMD_MUSIC_OFF	,	&UserCtrlCmdCallback, 		  0 , 0 },		
 	
-};
+};     //结构体数组
 
 void CarCtrlInit( car_config_t *p_car_cfg )
 {
-	memset( &g_CarCtrl , 0 , sizeof(g_CarCtrl) );
+	memset( &g_CarCtrl , 0 , sizeof(g_CarCtrl) );    //这个函数是给g_CarCtrl这一结构体赋初始值
 	g_CarCtrl.car_ctrl_freq = p_car_cfg->car_ctrl_interval / p_car_cfg->adc_interval ;
 	g_CarCtrl.left_speed = p_car_cfg->car_speed_set ;
 	g_CarCtrl.right_speed = p_car_cfg->car_speed_set ;	
@@ -81,7 +81,7 @@ void CarCtrlInit( car_config_t *p_car_cfg )
 
 }
 
-void CarMotoCtrl(int16_t left_speed, int16_t right_speed)
+void CarMotoCtrl(int16_t left_speed, int16_t right_speed)   //左右速度进行电机速度控制
 {
 	MotoLeftFrontCtrl(left_speed);
 	MotoLeftBackCtrl(left_speed);
@@ -97,7 +97,7 @@ void ManualCarCtrl(void)
 	}
 }
 
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)    //ADC检测反馈控制函数
 {
 	static uint32_t t = 0 ;
 	static uint32_t straight = 0 ;
@@ -107,12 +107,12 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 	
 	ADC_NormalCal();
 	
-	if ( (g_TrackStatus.full_white == 1 ) && ( g_CarCtrl.car_mode == CAR_TRACKING ) )
+	if ( (g_TrackStatus.full_white == 1 ) && ( g_CarCtrl.car_mode == CAR_TRACKING ) )   //小车检测到全白/无轨迹
 	{
-		if ( no_line > 100 )
+		if ( no_line > 100 )                  //noline开始递增
 		{			
 			StopAllMoto();
-			CarMotoCtrl(-300,-300);
+			CarMotoCtrl(-300,-300);           //小车开始倒车
 			return ;
 		}
 		no_line++;
@@ -122,7 +122,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 		no_line = 0 ;
 	}
 	
-	last_err_diff = g_TrackStatus.track_error[g_TrackStatus.adc_value] - g_CarCtrl.last_error ;
+	last_err_diff = g_TrackStatus.track_error[g_TrackStatus.adc_value] - g_CarCtrl.last_error ;    //误差计算和滤波处理
 	if( g_CarConfig.kalman_enable )
 	{
 		KalmanFilter( g_TrackStatus.track_error[g_TrackStatus.adc_value] , last_err_diff , g_CarConfig.adc_interval );
@@ -135,7 +135,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 	g_CarCtrl.last_error = g_TrackStatus.track_error[g_TrackStatus.adc_value];
 	
 	
-	t++;
+	t++;     //速度调整和曲线控制
 	if( ( t == g_CarCtrl.car_ctrl_freq ) && ( g_SystemMode == SYSTEM_TRACK ) )
 	{
 		t = 0;
@@ -181,7 +181,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 	}
 }
 
-void CarTrackCtrl(void)
+void CarTrackCtrl(void)               //寻路控制函数
 {
 	switch(g_CarCtrl.car_mode)
 	{			
@@ -393,6 +393,8 @@ void UserConfigCallback(uint8_t *buf, void *ptr)
 	CarCtrlInit( &g_CarConfig );
 	AngleKalmanInit(&g_CarConfig);
 }
+// CheckUserCmd() 用于识别用户输入的命令，并返回匹配的命令结构体指针。
+// UserConfigCallback() 则根据命令类型和用户输入的参数值，更新对应的系统配置，并调用相关函数进行配置更新和系统初始化。
 
 void UserManualCtrlCallback(uint8_t *buf, void *ptr)
 {

@@ -48,7 +48,7 @@ void IR_Track_Init( void )
 	IR_Track_Power_On();
 }
 
-void IR_Track_Power_On( void )
+void IR_Track_Power_On( void )    //打开红外传感器的电源
 {
 	HAL_GPIO_WritePin(SENSOR_PWR_ON_GPIO_Port, SENSOR_PWR_ON_Pin, GPIO_PIN_SET);
 }
@@ -66,7 +66,7 @@ void IR_Track_Start( void )
 	}
 }
 
-void ADC_NormalCal(void)
+void ADC_NormalCal(void)      //处理采集数据，计算小车目前的状态
 {
 	g_TrackStatus.adc_value = 0;
 	g_TrackStatus.total_adc_value = 0 ;
@@ -76,11 +76,11 @@ void ADC_NormalCal(void)
 	{
 		g_TrackStatus.adc_value <<= 1;
 		//if(g_TrackStatus.ir_adc[i] < g_CarConfig.adc_compare_gate )
-		if(abs(g_TrackStatus.ir_adc[i] - g_CarConfig.adc_compare_gate) < 300 )
+		if(abs(g_TrackStatus.ir_adc[i] - g_CarConfig.adc_compare_gate) < 300 )  //判断是否检测到黑线
 		{
 			g_TrackStatus.adc_value |= 0x01 ;
 		}
-		g_TrackStatus.total_adc_value += g_TrackStatus.ir_adc[i] ;
+		g_TrackStatus.total_adc_value += g_TrackStatus.ir_adc[i] ;   //循环储存在数组中
 	}
 	if(g_TrackStatus.adc_value == 0)
 	{
