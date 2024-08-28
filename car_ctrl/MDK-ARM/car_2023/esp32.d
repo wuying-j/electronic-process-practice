@@ -37,3 +37,4 @@ car_2023\esp32.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h
 car_2023\esp32.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h
 car_2023\esp32.o: ../Core/Inc/esp32.h
 car_2023\esp32.o: ../Core/Inc/car_drive.h
+car_2023\esp32.o: ../Core/Inc/common.h

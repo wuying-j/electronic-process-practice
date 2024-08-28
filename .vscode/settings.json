@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "common.h": "c",
-        "car_drive.h": "c"
+        "car_drive.h": "c",
+        "esp32.h": "c",
+        "stm32f1xx_it.h": "c"
     }
 }

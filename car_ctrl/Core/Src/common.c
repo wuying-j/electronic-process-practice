@@ -211,12 +211,12 @@ void CheckBtnRight(void)
 			__HAL_TIM_SET_PRESCALER(g_track_time , 7199 );
 			__HAL_TIM_SET_AUTORELOAD( g_track_time , g_CarConfig.adc_interval*10 - 1 );
 			HAL_TIM_Base_Start_IT( g_track_time );
-			CarMotoCtrl(g_CarConfig.car_speed_set, g_CarConfig.car_speed_set);             //此处缺少pid控制函数
+			CarMotoCtrl(g_CarConfig.car_speed_set, g_CarConfig.car_speed_set);
 		}
 		else if(g_SystemMode == SYSTEM_CAL_BLACK)
 		{
 			HAL_TIM_Base_Stop_IT(&htim7);
-			g_CarConfig.adc_compare_gate = g_TrackStatus.total_adc_value / IR_CHANNEL_NUM ;
+			g_CarConfig.adc_compare_gate = g_TrackStatus.total_adc_value / (5*IR_CHANNEL_NUM) ;
 			UserFlashDataWrite( &g_CarConfig );
 			HAL_TIM_Base_Start_IT(&htim7);
 		}
@@ -312,10 +312,10 @@ void UserTasks( void)
 	CheckUartRxData();
 	CheckUartTxData();
 	CheckUSBRxData();
-	CheckUSBTxData();	  
+	CheckUSBTxData();	
 	
 	CheckBtnLeft();
-	CheckBtnRight();    //这个函数后面没有进行实时adc采集导致HAL_ADC_ConvCpltCallback函数没有被调用没有启动pid调参？
+	CheckBtnRight();
 	ShowLED();
 	ManualCarCtrl();
 	MusicProcess();

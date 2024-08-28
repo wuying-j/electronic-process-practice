@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "car_drive.h": "c"
+        "esp32.h": "c",
+        "uart_dma.h": "c",
+        "usart.h": "c"
     }
 }

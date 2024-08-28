@@ -46,5 +46,6 @@ car_2023\main.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
 car_2023\main.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 car_2023\main.o: E:\Keil5\ARM\ARMCC\Bin\..\include\string.h
 car_2023\main.o: ../Core/Inc/gpio.h
+car_2023\main.o: ../Core/Inc/esp32.h
 car_2023\main.o: ../Core/Inc/common.h
 car_2023\main.o: ../Core/Inc/motor_drive.h

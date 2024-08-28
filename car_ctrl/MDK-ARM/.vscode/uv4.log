@@ -6,7 +6,7 @@ JLink info:
 DLL: V6.16c, compiled Jun 16 2017 18:14:49
 Firmware: J-Link J-Link V21 compiled Oct 24 2016 00:00:00
 Hardware: V1.00
-S/N : 773065415 
+S/N : 773945737 
 
 * JLink Info: Found SW-DP with ID 0x1BA01477
 * JLink Info: Found SW-DP with ID 0x1BA01477
@@ -39,4 +39,4 @@ JTAG speed: 4000 kHz
 
 Erase Done.Programming Done.Verify OK.* JLink Info: Setting AIRCR.SYSRESETREQ
 Application running ...
-Flash Load finished at 22:39:49
+Flash Load finished at 16:14:37
