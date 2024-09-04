@@ -36,7 +36,9 @@ typedef struct
 	uint16_t 	car_speed_set;
 	uint16_t  car_speed_max;
 	uint16_t  car_speed_min;	
-	uint16_t	adc_compare_gate;	
+	uint16_t	adc_compare_white[5];	
+	uint16_t	adc_compare_black[5];	
+	uint16_t	adc_compare_gate[5];	
 
 	uint8_t		adc_interval ;
 	uint8_t		car_ctrl_interval ;
@@ -88,6 +90,10 @@ void ManualCarCtrl(void);
 void CarTrackCtrl(void);
 void CarMotoCtrl(int16_t left_speed, int16_t right_speed);
 void CarPIDSpeedCtrl(float angle, float diff);
+void ms_Delay(uint16_t t_ms);
+void Turn(int left_speed1,int right_speed1,int delay_time1,int left_speed2,int right_speed2,int delay_time2);
+void CheckPath(void);
+
 
 #define CMD_MAP_NUM 10
 #define CMD_BUF_LEN	64

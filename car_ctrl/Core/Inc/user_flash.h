@@ -4,7 +4,7 @@
 #include "main.h"
 #include "car_drive.h"
 
-#define CAR_FLASH_TAG	0xAA5555AB
+#define CAR_FLASH_TAG	0xAA5555CC
 #pragma pack(4)
 typedef struct
 {

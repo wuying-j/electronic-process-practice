@@ -25,11 +25,12 @@
 #include "usart.h"
 #include "usb_device.h"
 #include "gpio.h"
-#include "esp32.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "common.h"
 #include "motor_drive.h"
+#include "car_drive.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -103,7 +104,6 @@ int main(void)
   MX_USB_DEVICE_Init();
   MX_TIM6_Init();
   MX_TIM7_Init();
-  ESP32_Init();
   /* USER CODE BEGIN 2 */
 	System_Init();
   /* USER CODE END 2 */
@@ -112,7 +112,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    ESP32_Start(1);
+//		Turn(500,0,2000,0,0,2000);
+		
 		UserTasks();
 //		MotoGoStrightCtrl(1000);
 		

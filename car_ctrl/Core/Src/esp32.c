@@ -2,7 +2,7 @@
 #include "main.h"
 #include "esp32.h"
 #include "car_drive.h"
-#include "common.h"
+
 esp32_t g_esp32 ;
 extern UART_HandleTypeDef huart1;
 
@@ -81,48 +81,11 @@ void ESP32_Init( void )
 	HAL_UART_Transmit(&huart1, bt_name, strlen(bt_name), 100);
 	HAL_Delay(500);
 	HAL_UART_Transmit(&huart1, bt_pin, strlen(bt_pin), 100);
-
 }
 
 void ESP32_Start( uint32_t mode )
 {
 	g_esp32.mode = mode ;
 	ESP32ModeCtrl( mode );
-	check_esp32_at_mode();
-}
-void ESP32_SendData(uint8_t* data, uint16_t size)
-{
-	HAL_UART_Transmit(&huart1, data, size, 100);
 }
 
-void ESP32_ReceiveData(uint8_t* buffer, uint16_t size)
-{
-	HAL_UART_Receive(&huart1, buffer, size, HAL_MAX_DELAY);
-}
-
-
-
-void check_esp32_at_mode(void)
-{
-    char *at_command = "AT\r\n";
-    uint8_t response[100];
-
-    // 发送AT指令
-    HAL_UART_Transmit(&huart1, (uint8_t *)at_command, strlen(at_command), HAL_MAX_DELAY);
-
-    // 接收ESP32的响应
-    HAL_UART_Receive(&huart1, response, sizeof(response), HAL_MAX_DELAY);
-
-    // 简单检查响应是否为"OK"
-    if (strstr((char *)response, "OK") != NULL)
-    {
-        // ESP32已进入AT模式
-		LEDCtrl(0x08,0x80);
-		HAL_Delay(2000);
-    }
-    else
-    {
-        // ESP32未进入AT模式或通信存在问题
-		
-    }
-}

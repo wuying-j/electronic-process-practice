@@ -38,8 +38,8 @@ typedef struct {
 //#define SYSTEM_IDLE 			0
 #define SYSTEM_TRACK			0
 #define SYSTEM_DOTMATRIX	1
-//#define SYSTEM_CAL_WHITE	3
-#define SYSTEM_CAL_BLACK	2
+#define SYSTEM_CAL_WHITE	2
+#define SYSTEM_CAL_BLACK	3
 	
 void System_Init( void );
 void UserTasks( void);

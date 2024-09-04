@@ -12,16 +12,19 @@
 #include "uart_dma.h"
 
 extern __IO uint8_t  g_music_enable  ;
+extern track_status_t g_TrackStatus  ;
 
 car_config_t g_CarConfig =
 {
-	.KP = 30,
+	.KP = 60.0,
 	.KI = 0.0 ,
-	.KD = 5.8 ,
+	.KD = 1.4 ,
 	.car_speed_set = 300 ,
 	.car_speed_max = 500 ,
 	.car_speed_min = 300 ,	
-	.adc_compare_gate = 500 ,	
+	.adc_compare_white= { 200 ,200 ,200 ,200 ,200 } ,
+	.adc_compare_black= { 2000 ,2000 ,2000 ,2000 ,2000 } ,
+	.adc_compare_gate = { 1000 ,1000 ,1000 ,1000 ,1000 } ,
 	.adc_interval     = 2 ,
 	.car_ctrl_interval= 2 ,
 	.kalman_enable    = 1 ,
@@ -35,6 +38,7 @@ car_ctrl_t 	g_CarCtrl;
 
 
 uint8_t g_cmd_buf[CMD_BUF_LEN] = {0};
+ uint32_t path_recovery=0;
 
 void UserConfigCallback(uint8_t *buf, void *ptr);
 void UserManualCtrlCallback(uint8_t *buf, void *ptr);
@@ -102,26 +106,123 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 	static uint32_t t = 0 ;
 	static uint32_t straight = 0 ;
 	static uint32_t no_line = 0 ;
+	static uint8_t has_spun=0;
+	static uint8_t times=0;
+	uint16_t tim=10;
+
 	
 	int    last_err_diff ;
 	
 	ADC_NormalCal();
-	
+	if(path_recovery)
+	{
+		g_CarCtrl.total_err_diff = 0.0;
+    g_CarCtrl.total_err = 0.0;
+		g_CarCtrl.left_speed = 250;
+    g_CarCtrl.right_speed = 250;
+	}
 	if ( (g_TrackStatus.full_white == 1 ) && ( g_CarCtrl.car_mode == CAR_TRACKING ) )
 	{
-		if ( no_line > 100 )
-		{			
-			StopAllMoto();
-			CarMotoCtrl(-300,-300);
-			return ;
-		}
 		no_line++;
+		if(no_line>100&&(has_spun==0))
+		{
+			times++;
+			has_spun=1;
+			path_recovery=0;
+			switch(times%2)
+			{
+				case 0:
+				{
+					Turn(0,500,1600,0,0,2000);
+					break;
+				}
+				case 1:
+				{
+					Turn(450,0,1600,0,0,2000);
+					break;
+				}
+			}
+				
+//			Turn(500,0,1600,0,0,2000);
+			return;
+		}
+		else if(has_spun)
+		{
+			switch(times%2)
+			{
+				case 0:
+				{
+					CarMotoCtrl(300,300);
+					ms_Delay(6800);
+					while(!path_recovery && (tim))
+					{						
+						tim--;
+						StopAllMoto();  
+						CarMotoCtrl(0,0);
+					}
+					if(!tim)
+					{
+						CarMotoCtrl(0,0);
+						ms_Delay(2000);
+//						CarMotoCtrl(-300,-300);
+//						ms_Delay(2000);
+						Turn(400,0,1600,0,0,0);
+					}
+					break;
+				}
+				case 1:
+				{
+					CarMotoCtrl(300,300);
+					ms_Delay(8000);
+					while(!path_recovery )
+					{						
+//						tim--;
+						StopAllMoto();  
+						CarMotoCtrl(0,0);
+						ms_Delay(1000);
+						Turn(0,400,1000,0,0,2000);		
+						ADC_NormalCal();
+						CheckPath();
+					}
+//					if(!tim)
+//					{
+//						CarMotoCtrl(0,0);
+//						ms_Delay(2000);
+////						CarMotoCtrl(-300,-300);
+////						ms_Delay(2000);
+//							Turn(0,400,1600,0,0,0);
+//					}
+					break;
+				}
+			}
+//			CarMotoCtrl(300,450);
+			return;
+		}
+		
+//		if ( no_line > 100 )
+//		{			
+//			StopAllMoto();
+//			CarMotoCtrl(-300,-300);
+//			return ;
+//		}
+//		no_line++;
+//		if(no_line>30)
+//		{
+//			Turn(450,200,1200,200,500,1200);
+////			CarMotoCtrl(500,200);
+////			ms_Delay(1200);
+////			CarMotoCtrl(200,500);
+////			ms_Delay(1200);
+//			return;
+//		}
+		
 	}
-	else
+	else 
 	{
-		no_line = 0 ;
+	no_line = 0 ;
+	has_spun=0;
+//	Turn(0,0,0,0,0,2000);
 	}
-	
 	last_err_diff = g_TrackStatus.track_error[g_TrackStatus.adc_value] - g_CarCtrl.last_error ;
 	if( g_CarConfig.kalman_enable )
 	{
@@ -141,11 +242,11 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 		t = 0;
 		if ( g_CarCtrl.last_error == 0 ) 
 		{
-			if ( straight > 300 )       // accelerate to fastest speed
+			if ( straight > 500 )       // accelerate to fastest speed
 			{
 				g_CarCtrl.car_speed = g_CarConfig.car_speed_max   ;
 			}
-			else if ( straight > 200 )  // accelerate to faster speed
+			else if ( straight > 300 )  // accelerate to faster speed
 			{
 				g_CarCtrl.car_speed = g_CarConfig.car_speed_max -100  ;
 				straight++ ;
@@ -181,25 +282,26 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 	}
 }
 
+
 void CarTrackCtrl(void)
 {
 	switch(g_CarCtrl.car_mode)
 	{			
 		case CAR_FIND_START:
-
-			if(g_TrackStatus.full_black && g_CarCtrl.track_start == 0)
-			{
-				g_CarCtrl.track_start = 1;
-			}
-			else
-			{
-				if(g_TrackStatus.full_black ==0 && g_CarCtrl.track_start == 1)
-				{
-					g_CarCtrl.track_start = 0;
-					g_CarCtrl.car_mode = CAR_TRACKING;
-				}
-			}
-		break;
+		{
+//			if(g_TrackStatus.full_black && g_CarCtrl.track_start == 0)
+//			{
+//				g_CarCtrl.track_start = 1;
+//			}
+//			else
+//			{
+//				if(g_TrackStatus.full_black == 0 && g_CarCtrl.track_start == 1)
+//				{
+//					g_CarCtrl.track_start = 0;
+				g_CarCtrl.car_mode = CAR_TRACKING;
+				break;
+		}
+		
 			
 		case CAR_TRACKING:
 
@@ -209,7 +311,7 @@ void CarTrackCtrl(void)
 				StopAllMoto();
 				CarMotoCtrl( 0 , 0 );
 				HAL_ADC_Stop_DMA( &hadc1 );
-				IR_Track_Power_Off();
+				IR_Track_Power_Off();  
 				HAL_TIM_Base_Start_IT(&htim7);
 				g_CarCtrl.car_mode = CAR_IDLE;
 			}
@@ -238,7 +340,13 @@ void CarPIDSpeedCtrl(float error, float error_diff)
 	int  	left_speed;
 	int 	right_speed;
 
-	pid = ( (g_CarConfig.KP+50)* error + g_CarConfig.KD * error_diff ) / 2;
+	if(path_recovery)
+	{
+		
+		g_CarCtrl.car_speed=250;
+		
+	}
+	pid = ( g_CarConfig.KP * error + g_CarConfig.KD * error_diff ) / 2;
 	
 	left_speed =  g_CarCtrl.car_speed + pid;
 	right_speed = g_CarCtrl.car_speed - pid;
@@ -650,6 +758,35 @@ uint32_t UartCtrl_RxDataCallback( uint8_t * buf , uint32_t len )
 	}
 	return 1;
 }
+void ms_Delay(uint16_t t_ms)
+{
+	uint32_t t=t_ms*3127;
+	while(t--);
+}
+void Turn(int left_speed1,int right_speed1,int delay_time1,int left_speed2,int right_speed2,int delay_time2)
+{
+		CarMotoCtrl(left_speed1,right_speed1);
+		ms_Delay(delay_time1);
+		CarMotoCtrl(left_speed2,right_speed2);
+		ms_Delay(delay_time2);
+}
+void CheckPath(void)
+{
+	if(!g_TrackStatus.full_white)
+	{
+		path_recovery=1;
+	}
+	else
+	{
+		path_recovery=0;
+	}	
+}
+
+
+
+
+
+
 
 
 

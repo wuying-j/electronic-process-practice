@@ -1,9 +1,9 @@
 car_2023\motor_drive.o: ..\Core\Src\motor_drive.c
 car_2023\motor_drive.o: ../Core/Inc/motor_drive.h
-car_2023\motor_drive.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-car_2023\motor_drive.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
-car_2023\motor_drive.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
-car_2023\motor_drive.o: E:\Keil5\ARM\ARMCC\Bin\..\include\string.h
+car_2023\motor_drive.o: E:\MySoftware\EDA\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+car_2023\motor_drive.o: E:\MySoftware\EDA\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+car_2023\motor_drive.o: E:\MySoftware\EDA\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+car_2023\motor_drive.o: E:\MySoftware\EDA\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 car_2023\motor_drive.o: ../Core/Inc/main.h
 car_2023\motor_drive.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
 car_2023\motor_drive.o: ../Core/Inc/stm32f1xx_hal_conf.h
@@ -18,7 +18,7 @@ car_2023\motor_drive.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
 car_2023\motor_drive.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h
 car_2023\motor_drive.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
 car_2023\motor_drive.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-car_2023\motor_drive.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
+car_2023\motor_drive.o: E:\MySoftware\EDA\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 car_2023\motor_drive.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h
 car_2023\motor_drive.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h
 car_2023\motor_drive.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio_ex.h

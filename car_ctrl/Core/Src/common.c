@@ -185,6 +185,7 @@ void SystemModeCtrl(void)
 			led_matrix_init();
 			break;
 		
+		case SYSTEM_CAL_WHITE:
 		case SYSTEM_CAL_BLACK:
 			HAL_ADC_MspInit(&hadc1);
 			IR_Track_Init();
@@ -213,10 +214,27 @@ void CheckBtnRight(void)
 			HAL_TIM_Base_Start_IT( g_track_time );
 			CarMotoCtrl(g_CarConfig.car_speed_set, g_CarConfig.car_speed_set);
 		}
+		else if(g_SystemMode == SYSTEM_CAL_WHITE)
+		{
+			HAL_TIM_Base_Stop_IT(&htim7);
+			for(int i = 0; i < IR_CHANNEL_NUM; i++)
+			{
+					g_CarConfig.adc_compare_white[i] = g_TrackStatus.ir_adc[i] ;
+					g_CarConfig.adc_compare_gate[i] = (g_CarConfig.adc_compare_white[i] + g_CarConfig.adc_compare_black[i] )/2-400 ;
+			}
+			//g_CarConfig.adc_compare_gate = g_TrackStatus.total_adc_value / IR_CHANNEL_NUM ;
+			UserFlashDataWrite( &g_CarConfig );
+			HAL_TIM_Base_Start_IT(&htim7);
+		}
 		else if(g_SystemMode == SYSTEM_CAL_BLACK)
 		{
 			HAL_TIM_Base_Stop_IT(&htim7);
-			g_CarConfig.adc_compare_gate = g_TrackStatus.total_adc_value / (5*IR_CHANNEL_NUM) ;
+			for(int i = 0; i < IR_CHANNEL_NUM; i++)
+			{
+				g_CarConfig.adc_compare_black[i] = g_TrackStatus.ir_adc[i] ;
+				g_CarConfig.adc_compare_gate[i] = (g_CarConfig.adc_compare_white[i] + g_CarConfig.adc_compare_black[i] )/2-400 ;
+			}
+			//g_CarConfig.adc_compare_gate = g_TrackStatus.total_adc_value / IR_CHANNEL_NUM ;
 			UserFlashDataWrite( &g_CarConfig );
 			HAL_TIM_Base_Start_IT(&htim7);
 		}
@@ -284,7 +302,11 @@ void ShowLED( void )
 			{
 				LEDCtrl( 0x01 , 0x02 );
 			}
-			else
+			else if ( g_CarCtrl.car_mode == CAR_FIND_START )
+			{
+				LEDCtrl( 0x04 , 0x20 );
+			}
+			else if ( g_CarCtrl.car_mode == CAR_TRACKING )	
 			{
 				LEDCtrl( 0x0C , 0xA0 );
 			}
@@ -293,6 +315,10 @@ void ShowLED( void )
 		case SYSTEM_DOTMATRIX:
 			LEDCtrl( 0x02 , 0x08 );
 			break;
+			
+		case SYSTEM_CAL_WHITE:
+			LEDCtrl( 0x04 , 0x20 );
+			break;				
 			
 		case SYSTEM_CAL_BLACK:
 			LEDCtrl( 0x08 , 0x80 );

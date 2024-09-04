@@ -9,6 +9,7 @@
 ADC_HandleTypeDef * g_ir_track_adc = &hadc1;
 track_status_t g_TrackStatus  ;
 
+extern uint8_t path_recovery;
 
 void IR_Track_Init( void )
 {
@@ -69,7 +70,6 @@ void IR_Track_Start( void )
 
 void ADC_NormalCal(void)
 {
-//	unsigned int temp=0;
 	g_TrackStatus.adc_value = 0;
 	g_TrackStatus.total_adc_value = 0 ;
 	g_TrackStatus.full_white = 0;
@@ -77,20 +77,12 @@ void ADC_NormalCal(void)
 	for(int i = 0; i < IR_CHANNEL_NUM; i++)
 	{
 		g_TrackStatus.adc_value <<= 1;
-		//if(g_TrackStatus.ir_adc[i] < g_CarConfig.adc_compare_gate )
-		if(g_TrackStatus.ir_adc[i] > g_CarConfig.adc_compare_gate )
+		if(g_TrackStatus.ir_adc[i] > g_CarConfig.adc_compare_gate[i] )
+		//if(abs(g_TrackStatus.ir_adc[i] - g_CarConfig.adc_compare_gate[i]) < 300 )
 		{
-			g_TrackStatus.adc_value = g_TrackStatus.adc_value | 0x01 ;
-		};
-//		switch(i)
-//		{
-//			case 0: temp=1;break;
-//			case 1: temp=1;break;
-//			case 2: temp=4;break;
-//			case 3: temp=2;break;
-//			case 4: temp=2;break;
-//		}
-		g_TrackStatus.total_adc_value = g_TrackStatus.total_adc_value + g_TrackStatus.ir_adc[i] ;
+			g_TrackStatus.adc_value |= 0x01 ; // black
+		}
+		//g_TrackStatus.total_adc_value += g_TrackStatus.ir_adc[i] ;
 	}
 	if(g_TrackStatus.adc_value == 0)
 	{
@@ -100,6 +92,7 @@ void ADC_NormalCal(void)
 	{
 		g_TrackStatus.full_black = 1;
 	}
+	
 }
 
 

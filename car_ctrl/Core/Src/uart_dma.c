@@ -118,7 +118,7 @@ void Uart_DMA_Init( const uart_map_t * uart_map)
 	g_uart_dma[ i ].target_id   = uart_map->target_id ;
 	g_uart_dma[ i ].target_type = uart_map->target_type ;
 	
-	__HAL_UART_ENABLE_IT( uart_map->huart , UART_IT_IDLE);    //Ê¹ï¿½Ü¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
+	__HAL_UART_ENABLE_IT( uart_map->huart , UART_IT_IDLE);    //Ê¹ÄÜ¿ÕÏÐÖÕÖÐ¶Ï
 	if ( uart_map->hdma_rx != NULL )
 	{
 		HAL_UART_Receive_DMA( uart_map->huart , 
@@ -132,6 +132,7 @@ void Uart_DMA_Init( const uart_map_t * uart_map)
 													UART_RX_BUF_SIZE );
 	}
 }
+
 
 void Uart_RxIDLE_Handler( int32_t port )
 {
@@ -364,7 +365,7 @@ void StopAllUart( void )
 			{
           HAL_UART_EndRxTransfer_IT( g_uart_dma[ index ].huart );			
 			}
-    	__HAL_UART_DISABLE_IT( g_uart_dma[ index ].huart , UART_IT_IDLE);    //Ê¹ï¿½Ü¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
+    	__HAL_UART_DISABLE_IT( g_uart_dma[ index ].huart , UART_IT_IDLE);    //Ê¹ÄÜ¿ÕÏÐÖÕÖÐ¶Ï
 			HAL_UART_DeInit( g_uart_dma[ index ].huart ) ;
 		}
 	}

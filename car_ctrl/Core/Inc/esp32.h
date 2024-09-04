@@ -15,9 +15,6 @@ typedef struct
 void ESP32ModeCtrl( uint8_t state);
 void ESP32_Start( uint32_t mode );
 void ESP32_Init( void );
-void ESP32_SendData(uint8_t* data, uint16_t size);
-void ESP32_ReceiveData(uint8_t* buffer, uint16_t size);
-void check_esp32_at_mode(void);
 
 extern esp32_t g_esp32 ;
 

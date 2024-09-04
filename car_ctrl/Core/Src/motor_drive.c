@@ -1,20 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #include "motor_drive.h"
 
 void MotoCtrlInit(void)

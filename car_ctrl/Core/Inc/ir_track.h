@@ -9,7 +9,7 @@
 #define ADC_THRESHOLD		3000  // 1/3 full scale
 typedef struct
 {
-  uint16_t 	ir_adc[IR_CHANNEL_NUM]  ;
+  uint16_t 	ir_adc[IR_CHANNEL_NUM]  ;   
 	int     	track_error[32];
 	uint16_t 	total_adc_value;
 	uint8_t 	adc_value;

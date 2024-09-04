@@ -7,14 +7,14 @@ car_2023\ir_track.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h
 car_2023\ir_track.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h
 car_2023\ir_track.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h
 car_2023\ir_track.o: ../Drivers/CMSIS/Include/core_cm3.h
-car_2023\ir_track.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+car_2023\ir_track.o: E:\MySoftware\EDA\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 car_2023\ir_track.o: ../Drivers/CMSIS/Include/cmsis_version.h
 car_2023\ir_track.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
 car_2023\ir_track.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
 car_2023\ir_track.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h
 car_2023\ir_track.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
 car_2023\ir_track.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-car_2023\ir_track.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
+car_2023\ir_track.o: E:\MySoftware\EDA\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 car_2023\ir_track.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h
 car_2023\ir_track.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h
 car_2023\ir_track.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio_ex.h
@@ -36,7 +36,7 @@ car_2023\ir_track.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h
 car_2023\ir_track.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h
 car_2023\ir_track.o: ../Core/Inc/adc.h
 car_2023\ir_track.o: ../Core/Inc/car_drive.h
-car_2023\ir_track.o: E:\Keil5\ARM\ARMCC\Bin\..\include\string.h
+car_2023\ir_track.o: E:\MySoftware\EDA\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 car_2023\ir_track.o: ../Core/Inc/ir_track.h
 car_2023\ir_track.o: ../Core/Inc/angle_kalman_filter.h
 car_2023\ir_track.o: ../Core/Inc/common.h
